@@ -1,0 +1,24 @@
+const ObjectID = require('rivers/server').ObjectID;
+
+const Messages = exports = module.exports = {
+  getMessages: function (context, text) {
+    context.db('messages').find().toArray().then(docs => {
+      context.socket.emit('action', 'Messages', 'message', docs);
+    });
+  },
+
+  newMessage: function (context, text) {
+    var msg = {text};
+    context.db('messages').insert(msg).then((result) => {
+      console.log("inserted message", msg, result.insertedCount);
+      context.socket.emit('action', 'Messages', 'message+', [msg]);
+    });
+  },
+
+  deleteMessage: function (context, id) {
+    context.db('messages').delete({_id: ObjectID(id)}).then((result) => {
+      console.log("deleted message", id, (result||{}).deletedCount);
+      context.socket.emit('action', 'Messages', 'message-', [{_id:id}]);
+    });
+  }
+};

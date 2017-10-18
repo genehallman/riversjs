@@ -1,0 +1,71 @@
+var webpack = require('webpack');
+var path = require('path');
+var RiversPlugin = require('rivers/server').WebpackPlugin;
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
+var CLIENT_DIR = path.resolve(__dirname);
+var BUILD_DIR = path.resolve(CLIENT_DIR, "build");
+var IMAGE_DIR = path.resolve(CLIENT_DIR, "static/images");
+var APP_DIR = path.resolve(CLIENT_DIR, 'ui');
+var HTML_DIR = path.resolve(CLIENT_DIR, "static/html");
+
+var config = {
+  entry: {
+    app: [APP_DIR + "/app.jsx"]
+  },
+  output: {
+    path: CLIENT_DIR + '/static/js/',
+    publicPath: 'static/',
+    filename: "{{project_name}}.js"
+  },
+  plugins: [
+    new RiversPlugin(),
+    // new CopyWebpackPlugin([{ from: HTML_DIR, to: BUILD_DIR }]),
+    // new CopyWebpackPlugin([{ from: IMAGE_DIR, to: BUILD_DIR + '/images' }]),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+        'SOCKET_URL': JSON.stringify(process.env.SOCKET_URL)
+      }
+    })
+  ],
+  module : {
+    loaders : [
+      {
+        test : /\.jsx?/,
+        include : [APP_DIR, '/home/gene/dev/rivers/client'],
+        loader : 'babel-loader',
+        query: {
+          presets:[ 'es2015', 'react', 'stage-2' ]
+        }
+      },{
+        test: /\.scss$/,
+        use: [
+          {loader: "style-loader" /* creates style nodes from JS strings */ },
+          {loader: "css-loader" /* translates CSS into CommonJS */ },
+          {loader: "sass-loader" /* compiles Sass to CSS */ }
+        ]
+      },{
+        test: /\.css$/,
+        use: [
+          { loader: "style-loader" /* creates style nodes from JS strings */},
+          { loader: "css-loader" /* translates CSS into CommonJS */ }
+        ]
+      }
+    ]
+  },
+  resolve: {
+    modules: ["./node_modules"],
+    extensions: [".js", ".json", ".jsx", ".css", ".scss"]
+  }
+};
+
+
+if (process.env.NODE_ENV != 'production') {
+  config.entry.app.unshift('webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&reload=true');
+  config.plugins.unshift(new webpack.HotModuleReplacementPlugin());
+  config.devtool = 'inline-source-map';
+}
+
+
+module.exports = config;

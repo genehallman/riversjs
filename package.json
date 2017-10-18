@@ -1,0 +1,36 @@
+{
+  "name": "rivers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "rivers": "bin/rivers.js"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "express": "^4.16.2",
+    "handlebars": "^4.0.10",
+    "heroku-ssl-redirect": "0.0.4",
+    "history": "^4.6.3",
+    "mime-types": "^2.1.17",
+    "mongodb": "^2.2.33",
+    "node-dev": "^3.1.3",
+    "object-hash": "^1.2.0",
+    "optimist": "^0.6.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.2",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.6",
+    "redux": "^3.7.2",
+    "redux-promise": "^0.5.3",
+    "socket.io": "^2.0.3",
+    "virtual-module-webpack-plugin": "^0.3.0",
+    "webpack": "^3.7.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1"
+  }
+}

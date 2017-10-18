@@ -1,0 +1,13 @@
+import {reduce} from 'rivers/client/reducer';
+
+const Reducers = {
+  {{#each routes}}
+      {{@key}}: {
+        {{#each this}}
+          {{@key}}: (...args) => send('{{@../key}}.{{@key}}', ...args),
+        {{/each}}
+      },
+  {{/each}}
+};
+
+export default Reducers;

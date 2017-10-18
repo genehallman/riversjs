@@ -1,0 +1,13 @@
+import {send} from 'rivers/client/socket';
+
+const Actions = {
+  {{#each routes}}
+      {{@key}}: {
+        {{#each this}}
+          {{@key}}: (...args) => send('action', '{{@../key}}', '{{@key}}', ...args),
+        {{/each}}
+      },
+  {{/each}}
+};
+
+export default Actions;
