@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/genehallman/riversjs/master/templates/generate/images/logo.png" alt="logo" width="200px" height="200px"/>
+  <span 
+</p>
+  
 # Rivers
 
 ## To contribute:
